@@ -44,8 +44,8 @@ public class ClientYAMLConfig {
 
         /**
          * The server's host
-         *
-         * Usually something like {@code kbyg.domani.tld or api.domain.tld}
+         * <p>
+         * Usually something like {@code kbyg.domain.tld or api.domain.tld}
          */
         private String serverHost;
 
@@ -57,6 +57,7 @@ public class ClientYAMLConfig {
             this.serverHost = serverHost;
         }
     }
+
     public static class ClientProperties {
 
         /**
@@ -64,12 +65,54 @@ public class ClientYAMLConfig {
          */
         private UUID clientUuid;
 
+        /**
+         * The delay (in milliseconds) between checks for nearby devices
+         */
+        private long nearbyCalculatorDelay;
+
+        /**
+         * The interface properties
+         */
+        private InterfaceProperties interfaceProperties;
+
         public UUID getClientUuid() {
             return clientUuid;
         }
 
         public void setClientUuid(UUID clientUuid) {
             this.clientUuid = clientUuid;
+        }
+
+        public long getNearbyCalculatorDelay() {
+            return nearbyCalculatorDelay;
+        }
+
+        public void setNearbyCalculatorDelay(long nearbyCalculatorDelay) {
+            this.nearbyCalculatorDelay = nearbyCalculatorDelay;
+        }
+
+        public InterfaceProperties getInterfaceProperties() {
+            return interfaceProperties;
+        }
+
+        public void setInterfaceProperties(InterfaceProperties interfaceProperties) {
+            this.interfaceProperties = interfaceProperties;
+        }
+
+        public static class InterfaceProperties {
+
+            /**
+             * The target wireless interface handle
+             */
+            private String target;
+
+            public String getTarget() {
+                return target;
+            }
+
+            public void setTarget(String target) {
+                this.target = target;
+            }
         }
     }
 }
