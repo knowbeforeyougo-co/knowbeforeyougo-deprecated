@@ -8,23 +8,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-@Service
 public class CommandExecutorService {
-
-    /**
-     * Configuration
-     */
-    private final ClientYAMLConfig config;
-
-    /**
-     * Command executor service
-     *
-     * @param config config
-     */
-    @Autowired
-    public CommandExecutorService(ClientYAMLConfig config) {
-        this.config = config;
-    }
 
     /**
      * Executes a terminal command

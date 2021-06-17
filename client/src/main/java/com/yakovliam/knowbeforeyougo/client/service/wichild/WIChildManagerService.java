@@ -6,14 +6,8 @@ import com.yakovliam.knowbeforeyougo.client.service.WIServiceChild;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 
-@Configurable
+@Configurable(preConstruction = true)
 public class WIChildManagerService extends WIServiceChild {
-
-    /**
-     * Mode switcher util
-     */
-    @Autowired
-    private final ModeSwitcherUtil modeSwitcherUtil;
 
     /**
      * WIServiceChild
@@ -22,7 +16,6 @@ public class WIChildManagerService extends WIServiceChild {
      */
     public WIChildManagerService(WirelessInterface parent) {
         super(parent);
-        this.modeSwitcherUtil = new ModeSwitcherUtil();
     }
 
     /**
@@ -31,6 +24,6 @@ public class WIChildManagerService extends WIServiceChild {
     @Override
     public void switchModes() {
         // switch the mode
-        this.modeSwitcherUtil.switchModes(parent);
+        ModeSwitcherUtil.switchModes(parent);
     }
 }

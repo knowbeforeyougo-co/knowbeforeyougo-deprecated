@@ -7,7 +7,7 @@ public class WirelessInterface {
     /**
      * The mode that the current target wireless interface is in
      */
-    private final InterfaceMode mode;
+    private InterfaceMode mode;
 
     /**
      * The handle or name of the target wireless interface
@@ -47,6 +47,15 @@ public class WirelessInterface {
      */
     public InterfaceMode getMode() {
         return mode;
+    }
+
+    /**
+     * Sets the mode
+     *
+     * @param mode mode
+     */
+    public void setMode(InterfaceMode mode) {
+        this.mode = mode;
     }
 
     /**
