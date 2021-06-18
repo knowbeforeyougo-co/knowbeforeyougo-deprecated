@@ -71,6 +71,11 @@ public class ClientYAMLConfig {
         private long nearbyCalculatorDelay;
 
         /**
+         * User password
+         */
+        private String userPassword;
+
+        /**
          * The interface properties
          */
         private InterfaceProperties interfaceProperties;
@@ -97,6 +102,15 @@ public class ClientYAMLConfig {
 
         public void setInterfaceProperties(InterfaceProperties interfaceProperties) {
             this.interfaceProperties = interfaceProperties;
+        }
+
+        public String getUserPassword() {
+            return userPassword;
+        }
+
+        public ClientProperties setUserPassword(String userPassword) {
+            this.userPassword = userPassword;
+            return this;
         }
 
         public static class InterfaceProperties {

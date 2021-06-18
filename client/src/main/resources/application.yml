@@ -4,5 +4,6 @@ kbyg:
     nearby-calculator-delay: 30000
     interface-properties:
       target: "wlan1"
+    userPassword: "passwordHere"
   server-properties:
     server-host: "https://kbyg.yakovliam.com/"

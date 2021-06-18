@@ -1,5 +1,7 @@
 package com.yakovliam.knowbeforeyougo.client.io.mode;
 
+import com.yakovliam.knowbeforeyougo.client.SpringContext;
+import com.yakovliam.knowbeforeyougo.client.config.ClientYAMLConfig;
 import com.yakovliam.knowbeforeyougo.client.io.CommandExecutorService;
 import com.yakovliam.knowbeforeyougo.client.io.ExecutorFunction;
 import com.yakovliam.knowbeforeyougo.client.model.InterfaceMode;
@@ -22,12 +24,16 @@ public class ModeSwitcherUtil {
      * @param wirelessInterface wireless interface
      */
     public static void switchModes(WirelessInterface wirelessInterface) {
+        String userPassword = SpringContext.getBean(ClientYAMLConfig.class)
+                .getClientProperties()
+                .getUserPassword();
+
         if (wirelessInterface.getMode() == InterfaceMode.MONITOR) {
             // stop, switch to managed
             commandExecutorService.executeCommand(new TerminalCommand().
                     setCommand(String.format(SWITCH_TO_MANAGED, wirelessInterface.getHandle()))
                     .setSudo(true)
-                    .setUserPassword("PASSWORD"), new ExecutorFunction().withWhenFailed((o) -> {
+                    .setUserPassword(userPassword), new ExecutorFunction().withWhenFailed((o) -> {
                         System.out.println("---- FAILED -----\n" + o);
                     }
             ).withWhenSucceeded((o) -> {
@@ -39,7 +45,7 @@ public class ModeSwitcherUtil {
             commandExecutorService.executeCommand(new TerminalCommand().
                     setCommand(String.format(SWITCH_TO_MONITOR, wirelessInterface.getHandle()))
                     .setSudo(true)
-                    .setUserPassword("PASSWORD"), new ExecutorFunction().withWhenFailed((o) -> {
+                    .setUserPassword(userPassword), new ExecutorFunction().withWhenFailed((o) -> {
                         System.out.println("---- FAILED -----\n" + o);
                     }
             ).withWhenSucceeded((o) -> {
