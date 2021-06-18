@@ -4,10 +4,12 @@ import com.yakovliam.knowbeforeyougo.client.config.ClientYAMLConfig;
 import com.yakovliam.knowbeforeyougo.client.model.WirelessInterface;
 import com.yakovliam.knowbeforeyougo.client.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 @Component
+@ComponentScan(basePackages = "com.yakovliam.knowbeforeyougo.client")
 public class WirelessInterfaceService implements ClientService {
 
     /**

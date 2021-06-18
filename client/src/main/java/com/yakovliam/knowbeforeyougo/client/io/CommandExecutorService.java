@@ -1,54 +1,57 @@
 package com.yakovliam.knowbeforeyougo.client.io;
 
-import com.yakovliam.knowbeforeyougo.client.config.ClientYAMLConfig;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.yakovliam.knowbeforeyougo.client.model.TerminalCommand;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 
 public class CommandExecutorService {
 
     /**
      * Executes a terminal command
      *
-     * @param command          command
+     * @param terminalCommand  command
      * @param executorFunction callback function
      */
-    public void executeCommand(String command, ExecutorFunction executorFunction) {
+    public void executeCommand(TerminalCommand terminalCommand, ExecutorFunction executorFunction) {
         // process
         Process process;
-        // output block
-        String out;
         // full output
         StringBuilder fullOutput = new StringBuilder();
         // exit code
         int exit;
 
         try {
-            // spawn execution process
-            process = Runtime.getRuntime().exec(command);
+            process = Runtime.getRuntime().exec(terminalCommand.getCommand());
 
-            // reader for output
-            BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
-
-            while ((out = br.readLine()) != null) {
-                fullOutput.append(out).append("\n");
+            if (terminalCommand.isSudo()) {
+                BufferedWriter output = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
+                output.write(terminalCommand.getUserPassword());
+                output.flush();
+                output.close();
             }
 
-            // wait until done
-            process.waitFor();
 
-            exit = process.exitValue();
+            String line;
+            BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            while ((line = input.readLine()) != null) {
+                fullOutput.append(line).append("\n");
+            }
 
-            // destroy
-            process.destroy();
-        } catch (IOException | InterruptedException ignored) {
+
+            // close input
+            input.close();
+
+            // wait for process to end, and get exit code
+            exit = process.waitFor();
+
+        } catch (IOException |
+                InterruptedException e) {
+            e.printStackTrace();
             executorFunction.acceptFailed(fullOutput.toString());
             return;
         }
 
+        // succeed or fail
         if (exit == 0) {
             executorFunction.acceptSucceeded(fullOutput.toString());
         } else {
