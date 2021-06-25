@@ -1,5 +1,6 @@
 package com.yakovliam.knowbeforeyougo.client.service;
 
+import com.yakovliam.knowbeforeyougo.client.model.InterfaceMode;
 import com.yakovliam.knowbeforeyougo.client.model.WirelessInterface;
 
 public abstract class WIServiceChild {
@@ -22,4 +23,11 @@ public abstract class WIServiceChild {
      * Switches the mode of the wireless interface
      */
     public abstract void switchModes();
+
+    /**
+     * Sets the interface mode to provided
+     *
+     * @param interfaceMode interface mode
+     */
+    public abstract void setMode(InterfaceMode interfaceMode);
 }

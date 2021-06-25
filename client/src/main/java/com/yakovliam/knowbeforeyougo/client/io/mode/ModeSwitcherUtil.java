@@ -30,28 +30,69 @@ public class ModeSwitcherUtil {
 
         if (wirelessInterface.getMode() == InterfaceMode.MONITOR) {
             // stop, switch to managed
-            commandExecutorService.executeCommand(new TerminalCommand().
-                    setCommand(String.format(SWITCH_TO_MANAGED, wirelessInterface.getHandle()))
-                    .setSudo(true)
-                    .setUserPassword(userPassword), new ExecutorFunction().withWhenFailed((o) -> {
-                        System.out.println("---- FAILED -----\n" + o);
-                    }
-            ).withWhenSucceeded((o) -> {
-                System.out.println("---- SUCCEEDED -----\n" + o);
-            }));
-            wirelessInterface.setMode(InterfaceMode.MANAGED);
+            setModeManaged(wirelessInterface, userPassword);
         } else {
             // start, switch to monitor
-            commandExecutorService.executeCommand(new TerminalCommand().
-                    setCommand(String.format(SWITCH_TO_MONITOR, wirelessInterface.getHandle()))
-                    .setSudo(true)
-                    .setUserPassword(userPassword), new ExecutorFunction().withWhenFailed((o) -> {
-                        System.out.println("---- FAILED -----\n" + o);
-                    }
-            ).withWhenSucceeded((o) -> {
-                System.out.println("---- SUCCEEDED -----\n" + o);
-            }));
-            wirelessInterface.setMode(InterfaceMode.MONITOR);
+            setModeMonitor(wirelessInterface, userPassword);
         }
+    }
+
+    /**
+     * Sets the mode of a wireless interface to provided
+     *
+     * @param wirelessInterface wireless interface
+     * @param interfaceMode     interface mode
+     */
+    public static void setMode(WirelessInterface wirelessInterface, InterfaceMode interfaceMode) {
+        String userPassword = SpringContext.getBean(ClientYAMLConfig.class)
+                .getClientProperties()
+                .getUserPassword();
+
+        // stop, switch to managed
+        setModeManaged(wirelessInterface, userPassword);
+
+        if (interfaceMode == InterfaceMode.MONITOR) {
+            // start, switch to monitor
+            setModeMonitor(wirelessInterface, userPassword);
+        }
+    }
+
+    /**
+     * Sets the mode to monitor
+     *
+     * @param wirelessInterface wireless interface
+     * @param userPassword      password
+     */
+    private static void setModeMonitor(WirelessInterface wirelessInterface, String userPassword) {
+        commandExecutorService.executeCommand(new TerminalCommand().
+                setCommand(String.format(SWITCH_TO_MONITOR, wirelessInterface.getHandle()))
+                .setSudo(true)
+                .setUserPassword(userPassword), new ExecutorFunction().withWhenFailed((o) -> {
+                    System.out.println("---- FAILED -----\n" + o);
+                }
+        ).withWhenSucceeded((o) -> {
+            System.out.println("---- SUCCEEDED -----\n" + o);
+        }));
+        wirelessInterface.setMode(InterfaceMode.MONITOR);
+    }
+
+    /**
+     * Sets the mode to managed
+     *
+     * @param wirelessInterface wireless interface
+     * @param userPassword      password
+     */
+    private static void setModeManaged(WirelessInterface wirelessInterface, String userPassword) {
+        commandExecutorService.executeCommand(new TerminalCommand().
+                setCommand(String.format(SWITCH_TO_MANAGED, wirelessInterface.getHandle()))
+                .setSudo(true)
+                .setUserPassword(userPassword), new ExecutorFunction().withWhenFailed((o) -> {
+                    System.out.println("---- FAILED -----\n" + o);
+                }
+        ).withWhenSucceeded((o) -> {
+            System.out.println("---- SUCCEEDED -----\n" + o);
+        }));
+
+        wirelessInterface.setMode(InterfaceMode.MANAGED);
     }
 }

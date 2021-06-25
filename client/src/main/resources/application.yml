@@ -1,6 +1,6 @@
 kbyg:
   client-properties:
-    client-uuid: "e15cc64f-1266-43bf-9cc5-d979fafa4e34"
+    client-uuid: "00000000-0000-0000-0000-000000000000"
     nearby-calculator-delay: 30000
     interface-properties:
       target: "wlan1"

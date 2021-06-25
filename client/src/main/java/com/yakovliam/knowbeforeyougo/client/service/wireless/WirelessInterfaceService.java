@@ -1,6 +1,7 @@
 package com.yakovliam.knowbeforeyougo.client.service.wireless;
 
 import com.yakovliam.knowbeforeyougo.client.config.ClientYAMLConfig;
+import com.yakovliam.knowbeforeyougo.client.model.InterfaceMode;
 import com.yakovliam.knowbeforeyougo.client.model.WirelessInterface;
 import com.yakovliam.knowbeforeyougo.client.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,5 +51,14 @@ public class WirelessInterfaceService implements ClientService {
      **/
     public void switchModes() {
         wirelessInterface.getManagerService().switchModes();
+    }
+
+    /**
+     * Sets the interface mode to provided
+     *
+     * @param interfaceMode interface mode
+     */
+    public void setMode(InterfaceMode interfaceMode) {
+        wirelessInterface.getManagerService().setMode(interfaceMode);
     }
 }
