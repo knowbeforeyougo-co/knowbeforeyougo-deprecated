@@ -11,7 +11,7 @@ router.post('/startup', function (req, res, next) {
         // notify me via phone #
 
         // deny
-        return deny(res, "Invalid organization, uuid, or token.");
+        return deny(res, "Invalid organization, id, or token.");
     }
 
     res.send("Startup");
