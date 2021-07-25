@@ -20,6 +20,9 @@ const client = new Schema({
             type: [Number],
             required: true
         }
+    },
+    lastStartupTime: {
+        type: Date
     }
 }, {timestamps: true});
 
