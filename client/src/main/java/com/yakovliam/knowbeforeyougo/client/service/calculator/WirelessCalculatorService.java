@@ -3,10 +3,12 @@ package com.yakovliam.knowbeforeyougo.client.service.calculator;
 import com.yakovliam.knowbeforeyougo.client.config.ClientYAMLConfig;
 import com.yakovliam.knowbeforeyougo.client.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @Service
+@ComponentScan(basePackages = "com.yakovliam.knowbeforeyougo.client")
 public class WirelessCalculatorService extends TaskService {
 
     /**
@@ -31,5 +33,6 @@ public class WirelessCalculatorService extends TaskService {
     @Scheduled(fixedDelayString = "#{@clientYAMLConfig.clientProperties.nearbyCalculatorDelay}")
     public void start() {
         // use nearby calculator to normalize data, then
+
     }
 }

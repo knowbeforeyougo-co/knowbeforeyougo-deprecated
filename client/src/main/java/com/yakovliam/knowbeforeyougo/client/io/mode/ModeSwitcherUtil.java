@@ -1,6 +1,6 @@
 package com.yakovliam.knowbeforeyougo.client.io.mode;
 
-import com.yakovliam.knowbeforeyougo.client.SpringContext;
+import com.yakovliam.knowbeforeyougo.client.SpringApplicationContext;
 import com.yakovliam.knowbeforeyougo.client.config.ClientYAMLConfig;
 import com.yakovliam.knowbeforeyougo.client.io.CommandExecutorService;
 import com.yakovliam.knowbeforeyougo.client.io.ExecutorFunction;
@@ -24,7 +24,7 @@ public class ModeSwitcherUtil {
      * @param wirelessInterface wireless interface
      */
     public static void switchModes(WirelessInterface wirelessInterface) {
-        String userPassword = SpringContext.getBean(ClientYAMLConfig.class)
+        String userPassword = SpringApplicationContext.getApplicationContext().getBean(ClientYAMLConfig.class)
                 .getClientProperties()
                 .getUserPassword();
 
@@ -44,7 +44,7 @@ public class ModeSwitcherUtil {
      * @param interfaceMode     interface mode
      */
     public static void setMode(WirelessInterface wirelessInterface, InterfaceMode interfaceMode) {
-        String userPassword = SpringContext.getBean(ClientYAMLConfig.class)
+        String userPassword = SpringApplicationContext.getApplicationContext().getBean(ClientYAMLConfig.class)
                 .getClientProperties()
                 .getUserPassword();
 

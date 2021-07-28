@@ -1,19 +1,42 @@
 package com.yakovliam.knowbeforeyougo.client;
 
 import com.yakovliam.knowbeforeyougo.client.config.ConfigUtil;
-import com.yakovliam.knowbeforeyougo.client.service.wireless.WirelessInterfaceUtil;
+import com.yakovliam.knowbeforeyougo.client.model.InterfaceMode;
+import com.yakovliam.knowbeforeyougo.client.service.wireless.WirelessInterfaceService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationEvent;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ClientBootstrapper {
+public class ClientBootstrapper implements ApplicationListener {
 
-    /**
-     * Construct bootstrapper
-     */
-    public ClientBootstrapper() {
+    @Autowired
+    private WirelessInterfaceService wirelessInterfaceService;
+
+    @Override
+    public void onApplicationEvent(ApplicationEvent event) {
+        if (event instanceof ContextRefreshedEvent) {
+            ApplicationContext applicationContext = ((ContextRefreshedEvent) event).getApplicationContext();
+            SpringApplicationContext.setApplicationContext(applicationContext);
+
+            initialize();
+        }
+    }
+
+    private void initialize() {
         // prepare configurations
         ConfigUtil.prepareConfigurations();
         // prepare interfaces
-        WirelessInterfaceUtil.prepareWirelessInterface();
+        prepareWirelessInterface();
+    }
+
+    private void prepareWirelessInterface() {
+        // set mode to managed
+        wirelessInterfaceService.setMode(InterfaceMode.MANAGED);
+        // now set mode to monitor
+        wirelessInterfaceService.setMode(InterfaceMode.MONITOR);
     }
 }
