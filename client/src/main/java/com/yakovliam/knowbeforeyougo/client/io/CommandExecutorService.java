@@ -6,6 +6,16 @@ import java.io.*;
 
 public class CommandExecutorService {
 
+    private static CommandExecutorService instance;
+
+    public static CommandExecutorService getInstance() {
+        if (instance == null) {
+            instance = new CommandExecutorService();
+        }
+
+        return instance;
+    }
+
     /**
      * Executes a terminal command
      *

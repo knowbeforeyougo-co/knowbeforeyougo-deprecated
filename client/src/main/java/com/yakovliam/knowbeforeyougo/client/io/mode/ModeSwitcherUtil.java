@@ -16,7 +16,7 @@ public class ModeSwitcherUtil {
     /**
      * Command executor service
      */
-    private static final CommandExecutorService commandExecutorService = new CommandExecutorService();
+    private static final CommandExecutorService commandExecutorService = CommandExecutorService.getInstance();
 
     /**
      * Switches the mode of a wireless interface
